@@ -1,0 +1,31 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build And Publish PHP
+        uses: elgohr/Publish-Docker-Github-Action@2.12
+        with:
+          name: parsilver/php-7.4
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          dockerfile: Dockerfile
+          tags: "latest"
+          
+      - name: Build And Publish Composer
+        uses: elgohr/Publish-Docker-Github-Action@2.12
+        with:
+          name: parsilver/php-7.4
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          dockerfile: composer.Dockerfile
+          tags: "composer"
