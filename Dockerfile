@@ -22,6 +22,9 @@ RUN apk --update add curl \
     freetype-dev \
     libjpeg-turbo-dev \
     libpng-dev \
+    nodejs \
+    npm \
+    ffmpeg \
     supervisor
 
 
