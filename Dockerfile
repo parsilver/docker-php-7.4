@@ -55,3 +55,5 @@ RUN echo "curl.cainfo=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.i
     && echo "openssl.capath=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.ini
 
 COPY ./local.ini /usr/local/etc/php/conf.d/app.ini
+
+CMD ["php-fpm"]
