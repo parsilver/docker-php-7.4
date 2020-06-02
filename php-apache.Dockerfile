@@ -44,4 +44,4 @@ COPY opcache.ini /usr/local/etc/php/conf.d/opacache.ini
 
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
-EXPOSE 80
+RUN a2enmod rewrite
