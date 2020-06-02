@@ -2,6 +2,10 @@ FROM php:7.4-fpm-alpine
 
 MAINTAINER PA <parkorn.ap@gmail.com>
 
+
+ARG INSTALL_COMPOSER;
+
+
 RUN apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
     curl-dev \
@@ -12,7 +16,7 @@ RUN apk add --no-cache --virtual .build-deps \
     sqlite-dev
 
 RUN apk --update add curl \
-    git \
+    # git \
     imagemagick \
     icu \
     icu-dev \
@@ -26,20 +30,19 @@ RUN apk --update add curl \
     supervisor
 
 
-# Enable redis
+# # Enable redis
 RUN pecl install redis && docker-php-ext-enable redis
 
-# Enable imagick
+# # Enable imagick
 RUN pecl install imagick && docker-php-ext-enable imagick
 
-# Install extensions
+# # Install extensions
 RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl xml iconv intl
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd
 
 RUN apk del -f .build-deps \
-    && rm -rf /var/cache/apk/* \
-    && mkdir -p /var/www
+    && rm -rf /var/cache/apk/*
 
 # Install cacert pem
 RUN curl --remote-name --time-cond cacert.pem https://curl.haxx.se/ca/cacert.pem \
@@ -54,4 +57,10 @@ RUN echo "curl.cainfo=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.i
 
 COPY ./local.ini /usr/local/etc/php/conf.d/app.ini
 
-CMD ["php-fpm"]
+
+RUN if [[ -n "$INSTALL_COMPOSER" ]]; \
+        then curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer; \
+    fi
+
+
+# CMD ["php-fpm"]
