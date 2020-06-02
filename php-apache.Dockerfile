@@ -27,6 +27,21 @@ RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl xml iconv intl
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd
 
+
+# Install cacert pem
+RUN curl --remote-name --time-cond cacert.pem https://curl.haxx.se/ca/cacert.pem \
+    && mkdir -p /etc/ssl/certs/ \
+    && cp cacert.pem /etc/ssl/certs/ \
+    && chown -R www-data:www-data /etc/ssl/certs/cacert.pem
+
+# Setup php
+RUN echo "curl.cainfo=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.ini \
+    && echo "openssl.cafile=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.ini \
+    && echo "openssl.capath=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.ini
+
+COPY ./local.ini /usr/local/etc/php/conf.d/app.ini
+
+
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
