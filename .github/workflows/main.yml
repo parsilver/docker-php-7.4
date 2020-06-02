@@ -19,7 +19,7 @@ jobs:
         run: |
           docker build -t php74-fpm -f Dockerfile .
           docker build -t php74-composer -f Dockerfile --build-arg INSTALL_COMPOSER . \
-            & docker build -t php74-apache php-apache.Dockerfile .
+            & docker build -t php74-apache -f php-apache.Dockerfile .
 
       - name: Publish images
         run: |

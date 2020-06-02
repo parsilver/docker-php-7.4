@@ -27,4 +27,6 @@ RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl xml iconv intl
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd
 
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
+
 EXPOSE 80
