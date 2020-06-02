@@ -58,9 +58,7 @@ RUN echo "curl.cainfo=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.i
 COPY ./local.ini /usr/local/etc/php/conf.d/app.ini
 
 
-RUN if [[ -n "$INSTALL_COMPOSER" ]]; \
-        then curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer; \
-    fi
+RUN if [[ -n $INSTALL_COMPOSER ]]; then curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer; fi
 
 
 CMD ["php-fpm"]
