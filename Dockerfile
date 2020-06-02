@@ -63,4 +63,4 @@ RUN if [[ -n "$INSTALL_COMPOSER" ]]; \
     fi
 
 
-# CMD ["php-fpm"]
+CMD ["php-fpm"]
