@@ -55,10 +55,13 @@ RUN echo "curl.cainfo=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.i
     && echo "openssl.cafile=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.ini \
     && echo "openssl.capath=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.ini
 
-COPY ./local.ini /usr/local/etc/php/conf.d/app.ini
+COPY ./php-ini/local.ini /usr/local/etc/php/conf.d/app.ini
 
 
-RUN if [[ -n $INSTALL_COMPOSER ]]; then curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer; fi
+RUN if [[ -n $INSTALL_COMPOSER ]]; then \
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer; \
+        echo "memory_limit = -1" >> /usr/local/etc/php/php.ini; \
+    fi
 
 
 CMD ["php-fpm"]

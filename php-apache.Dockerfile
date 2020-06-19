@@ -39,8 +39,8 @@ RUN echo "curl.cainfo=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.i
     && echo "openssl.cafile=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.ini \
     && echo "openssl.capath=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.ini
 
-COPY local.ini /usr/local/etc/php/conf.d/app.ini
-COPY opcache.ini /usr/local/etc/php/conf.d/opacache.ini
+COPY ./php-ini/local.ini /usr/local/etc/php/conf.d/app.ini
+COPY ./php-ini/opcache.ini /usr/local/etc/php/conf.d/opacache.ini
 
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
