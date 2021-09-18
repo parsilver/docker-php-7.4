@@ -42,6 +42,10 @@ RUN echo "curl.cainfo=\"/etc/ssl/certs/cacert.pem\"" >> /usr/local/etc/php/php.i
 COPY ./php-ini/local.ini /usr/local/etc/php/conf.d/app.ini
 COPY ./php-ini/opcache.ini /usr/local/etc/php/conf.d/opacache.ini
 
+# Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer;
+
+# Apache
 COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
 RUN a2enmod rewrite
