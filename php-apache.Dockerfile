@@ -29,7 +29,7 @@ RUN docker-php-ext-install gd
 
 
 # Install cacert pem
-RUN curl --remote-name --time-cond cacert.pem https://curl.haxx.se/ca/cacert.pem \
+RUN curl --remote-name --time-cond cacert.pem https://curl.se/ca/cacert.pem \
     && mkdir -p /etc/ssl/certs/ \
     && cp cacert.pem /etc/ssl/certs/ \
     && chown -R www-data:www-data /etc/ssl/certs/cacert.pem
